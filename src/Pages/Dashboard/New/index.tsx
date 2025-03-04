@@ -1,10 +1,18 @@
+import { ChangeEvent, useContext } from "react";
+import { storage } from "../../../services/firebaseConnection";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { Container } from "../../../Components/Container";
 import { DashboardHeader } from "../../../Components/DashboardHeader";
-import { FiUpload } from "react-icons/fi";
+import { Input } from "../../../Components/Inputs";
+
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Input } from "../../../Components/Inputs";
+
+import { FiUpload } from "react-icons/fi";
+import { authContext } from "../../../context";
+
+import { v4 as uuidV4 } from "uuid";
 
 const schema = yup.object().shape({
   carName: yup.string().required("Nome do carro é obrigatório!"),
@@ -26,6 +34,8 @@ const schema = yup.object().shape({
 type FormData = yup.InferType<typeof schema>;
 
 export function NewCar() {
+  const { user } = useContext(authContext);
+
   const {
     register,
     handleSubmit,
@@ -39,6 +49,38 @@ export function NewCar() {
   function onSubmit(data: FormData) {
     console.log(data);
     reset();
+  }
+
+  function handleImage(e: ChangeEvent<HTMLInputElement>) {
+    if (e.target.files) {
+      const image = e.target.files[0];
+      if (image.type === "image/png" || image.type === "image/jpeg") {
+        sendImage(image);
+      } else {
+        alert("Envie uma imagem do tipo PNG ou JPEG");
+      }
+    }
+  }
+
+  async function sendImage(image: File) {
+    if (!user) {
+      console.log("Usuário não autenticado");
+      return;
+    }
+
+    const currentUser = user.uid;
+    const imageName = uuidV4();
+    const imageRef = ref(storage, `images/${currentUser}/${imageName}`);
+
+    await uploadBytes(imageRef, image)
+      .then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          console.log(url);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -56,6 +98,7 @@ export function NewCar() {
               name=""
               id=""
               className=" opacity-0 cursor-pointer"
+              onChange={handleImage}
             />
           </div>
         </button>

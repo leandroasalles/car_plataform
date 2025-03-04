@@ -14,6 +14,7 @@ type ContextProviderProps = {
 
 type authContextData = {
   signed: boolean;
+  user?: userProps | null;
 };
 
 export const authContext = createContext({} as authContextData);
@@ -32,9 +33,9 @@ function AuthProvider({ children }: ContextProviderProps) {
       }
     });
   }),
-    [user];
+    [];
   return (
-    <authContext.Provider value={{ signed: !!user }}>
+    <authContext.Provider value={{ signed: !!user, user }}>
       {children}
     </authContext.Provider>
   );
