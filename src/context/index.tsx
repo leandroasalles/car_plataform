@@ -15,15 +15,18 @@ type ContextProviderProps = {
 type authContextData = {
   signed: boolean;
   user?: userProps | null;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 };
 
 export const authContext = createContext({} as authContextData);
 
 function AuthProvider({ children }: ContextProviderProps) {
   const [user, setUser] = useState<userProps | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser({
           uid: user.uid,
@@ -32,10 +35,13 @@ function AuthProvider({ children }: ContextProviderProps) {
         });
       }
     });
-  }),
-    [];
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
-    <authContext.Provider value={{ signed: !!user, user }}>
+    <authContext.Provider value={{ signed: !!user, user, loading, setLoading }}>
       {children}
     </authContext.Provider>
   );

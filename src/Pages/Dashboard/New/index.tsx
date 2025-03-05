@@ -1,15 +1,21 @@
-import { ChangeEvent, useContext } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { storage } from "../../../services/firebaseConnection";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import { Container } from "../../../Components/Container";
 import { DashboardHeader } from "../../../Components/DashboardHeader";
 import { Input } from "../../../Components/Inputs";
+import { Loading } from "../../../Components/Loading";
 
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { FiUpload } from "react-icons/fi";
+import { FiUpload, FiTrash } from "react-icons/fi";
 import { authContext } from "../../../context";
 
 import { v4 as uuidV4 } from "uuid";
@@ -33,8 +39,15 @@ const schema = yup.object().shape({
 
 type FormData = yup.InferType<typeof schema>;
 
+interface ImageProps {
+  name: string;
+  uid: string;
+  url: string;
+}
+
 export function NewCar() {
-  const { user } = useContext(authContext);
+  const { user, loading, setLoading } = useContext(authContext);
+  const [imageUrls, setImageUrls] = useState<ImageProps[]>([]);
 
   const {
     register,
@@ -71,23 +84,47 @@ export function NewCar() {
     const currentUser = user.uid;
     const imageName = uuidV4();
     const imageRef = ref(storage, `images/${currentUser}/${imageName}`);
+    setLoading(true);
 
     await uploadBytes(imageRef, image)
       .then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
-          console.log(url);
+          const newImage = {
+            name: imageName,
+            uid: currentUser,
+            url: url,
+          };
+          setImageUrls([...imageUrls, newImage]);
+          setLoading(false);
+          console.log("adicionou arquivo");
         });
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
+      });
+  }
+
+  async function handleDelete(image: ImageProps) {
+    const imageRef = ref(storage, `images/${image.uid}/${image.name}`);
+    setLoading(true);
+    await deleteObject(imageRef)
+      .then(() => {
+        setImageUrls(imageUrls.filter((img) => img.name !== image.name));
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
       });
   }
 
   return (
     <Container>
+      {loading && <Loading />}
       <DashboardHeader />
 
-      <div className="bg-white rounded-lg mb-4 flex flex-col justify-center w-full p-3 gap-4">
+      <div className="bg-white rounded-lg mb-4 flex justify-start w-full p-3 gap-4">
         <button className="w-48 cursor-pointer flex items-center justify-center border-2 border-gray-500 h-32 rounded-lg">
           <div className="absolute cursor-pointer">
             <FiUpload size={30} color="#000" />
@@ -102,6 +139,17 @@ export function NewCar() {
             />
           </div>
         </button>
+        {imageUrls.map((image) => (
+          <div
+            key={image.name}
+            className="relative flex justify-center items-center"
+          >
+            <button className="absolute" onClick={() => handleDelete(image)}>
+              <FiTrash color="#FFF" size={20} />
+            </button>
+            <img src={image.url} className="w-48 h-32" />
+          </div>
+        ))}
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)}>
