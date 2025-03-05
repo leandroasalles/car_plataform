@@ -23,7 +23,7 @@ export const authContext = createContext({} as authContextData);
 
 function AuthProvider({ children }: ContextProviderProps) {
   const [user, setUser] = useState<userProps | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);

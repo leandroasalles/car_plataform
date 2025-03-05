@@ -14,10 +14,10 @@ export function Private({ children }: privateProps): any {
     return <Loading />;
   }
 
-  // if (!signed) {
-  //   console.log("Não está logado");
-  //   return <Navigate to="/login" replace />;
-  // }
+  if (!signed) {
+    console.log("Não está logado");
+    return <Navigate to="/login" replace />;
+  }
 
   return children;
 }
