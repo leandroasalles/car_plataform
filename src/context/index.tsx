@@ -26,6 +26,7 @@ function AuthProvider({ children }: ContextProviderProps) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser({
@@ -34,6 +35,7 @@ function AuthProvider({ children }: ContextProviderProps) {
           email: user?.email,
         });
       }
+      setLoading(false);
     });
     return () => {
       unsubscribe();
