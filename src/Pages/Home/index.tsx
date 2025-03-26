@@ -1,6 +1,36 @@
+import { collection, query, getDocs } from "firebase/firestore";
+import { db } from "../../services/firebaseConnection";
+
 import { Container } from "../../Components/Container";
+import { useEffect, useState } from "react";
 
 export function Home() {
+  const [listCar, setListCart] = useState([]);
+
+  useEffect(() => {
+    function loadCars() {
+      let carList = [] as any;
+      const q = query(collection(db, "cars"));
+      const querySnapshot = getDocs(q);
+      querySnapshot.then((snapshot) => {
+        snapshot.forEach((doc) => {
+          carList.push({
+            carName: doc.data().carName,
+            year: doc.data().year,
+            city: doc.data().city,
+            images: doc.data().images,
+            km: doc.data().km,
+            price: doc.data().price,
+            id: doc.id,
+          });
+        });
+        setListCart(carList);
+      });
+    }
+
+    loadCars();
+  });
+
   return (
     <Container>
       <section className="w-full flex max-w-2xl m-auto my-5">
@@ -17,23 +47,30 @@ export function Home() {
         Carros novos e usados em todo Brasil
       </h1>
 
-      <main className="grid gap-6 grid-cols-1 lg:grid-cols-3 md:grid-cols-2 w-full">
-        <section className="bg-white rounded-lg mb-4 max-w-80 w-full mx-auto">
-          <img
-            className="w-full rounded-lg max-h-72 hover:scale-105 transition-all"
-            src="https://image.webmotors.com.br/_fotos/anunciousados/gigante/2024/202410/20241029/volvo-xc40-p6-recharge-electric-plus-wmimagem09533140654.jpg?s=fill&w=249&h=186&q=70"
-            alt="Carro elétrico"
-          />
-          <div className="p-3">
-            <h1 className="font-bold">Carro elétrico</h1>
-            <p className="text-zinc-400">Modelo: 2024 | 200.000 km</p>
-            <div className="mt-4">
-              <strong className="text-xl">R$ 190.000,00</strong>
-              <div className="h-px bg-slate-300 my-2 w-full"></div>
-              <p className="text-xs text-zinc-400">Belo Horizonte - MG</p>
+      <main className="grid gap-6 grid-cols-1 lg:grid-cols-4 md:grid-cols-2 w-full px-2">
+        {listCar.map((car: any) => (
+          <section
+            key={car.id}
+            className="bg-white rounded-lg mb-4 max-w-80 w-full mx-auto cursor-pointer hover:scale-105 transition-all"
+          >
+            <img
+              className="w-full rounded-lg max-h-72 "
+              src={car.images[0].url}
+              alt={car.carName}
+            />
+            <div className="p-3">
+              <h1 className="font-bold">{car.carName}</h1>
+              <p className="text-zinc-400">
+                {car.year} | {car.km} km
+              </p>
+              <div className="mt-4">
+                <strong className="text-xl">R$ {car.price}</strong>
+                <div className="h-px bg-slate-300 my-2 w-full"></div>
+                <p className="text-xs text-zinc-400">{car.city}</p>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ))}
       </main>
     </Container>
   );
