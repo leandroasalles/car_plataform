@@ -6,6 +6,9 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../../services/firebaseConnection";
+
 import { Container } from "../../../Components/Container";
 import { DashboardHeader } from "../../../Components/DashboardHeader";
 import { Input } from "../../../Components/Inputs";
@@ -59,8 +62,31 @@ export function NewCar() {
     mode: "onChange",
   });
 
-  function onSubmit(data: FormData) {
+  async function onSubmit(data: FormData) {
+    setLoading(true);
     console.log(data);
+    const newCar = {
+      uid: user?.uid,
+      images: imageUrls,
+      carName: data.carName,
+      model: data.model,
+      year: data.year,
+      km: data.km,
+      price: data.price,
+      city: data.city,
+      whatsapp: data.whatsapp,
+      description: data.description,
+    };
+
+    const carRef = collection(db, "cars");
+    await addDoc(carRef, newCar)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     reset();
   }
 
@@ -84,7 +110,6 @@ export function NewCar() {
     const currentUser = user.uid;
     const imageName = uuidV4();
     const imageRef = ref(storage, `images/${currentUser}/${imageName}`);
-    setLoading(true);
 
     await uploadBytes(imageRef, image)
       .then((snapshot) => {
@@ -95,13 +120,10 @@ export function NewCar() {
             url: url,
           };
           setImageUrls([...imageUrls, newImage]);
-          setLoading(false);
-          console.log("adicionou arquivo");
         });
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false);
       });
   }
 
