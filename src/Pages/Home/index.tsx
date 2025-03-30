@@ -5,11 +5,23 @@ import { Container } from "../../Components/Container";
 import { useEffect, useState } from "react";
 
 export function Home() {
-  const [listCar, setListCart] = useState([]);
+  interface CarProps {
+    carName: string;
+    year: number;
+    city: string;
+    images: [];
+    km: number;
+    price: number;
+    id: string;
+  }
+
+  const [listCar, setListCart] = useState<CarProps[]>([]);
+  const [Ids, setIds] = useState<string[]>([]);
 
   useEffect(() => {
     function loadCars() {
-      let carList = [] as any;
+      let carList: CarProps[] = [];
+
       const q = query(collection(db, "cars"));
       const querySnapshot = getDocs(q);
       querySnapshot.then((snapshot) => {
@@ -30,6 +42,12 @@ export function Home() {
 
     loadCars();
   });
+
+  function handleLoadImage(id: string) {
+    let carIds = [...Ids, id];
+    setIds(carIds);
+    console.log(Ids);
+  }
 
   return (
     <Container>
@@ -53,10 +71,15 @@ export function Home() {
             key={car.id}
             className="bg-white rounded-lg mb-4 max-w-80 w-full mx-auto cursor-pointer hover:scale-105 transition-all"
           >
+            <div
+              className="w-full rounded-lg h-60 bg-slate-300"
+              style={{ display: Ids.includes(car.id) ? "none" : "block" }}
+            ></div>
             <img
               className="w-full rounded-lg max-h-72 "
               src={car.images[0].url}
               alt={car.carName}
+              onLoad={() => handleLoadImage(car.id)}
             />
             <div className="p-3">
               <h1 className="font-bold">{car.carName}</h1>
