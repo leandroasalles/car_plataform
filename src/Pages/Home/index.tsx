@@ -44,8 +44,7 @@ export function Home() {
   });
 
   function handleLoadImage(id: string) {
-    let carIds = [...Ids, id];
-    setIds(carIds);
+    setIds((Ids) => [...Ids, id]);
     console.log(Ids);
   }
 
