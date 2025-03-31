@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
+
 import { collection, query, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 
 import { Container } from "../../Components/Container";
-import { useEffect, useState } from "react";
+import { CardCar } from "../../Components/CarCard";
 
 export function Home() {
   interface CarProps {
@@ -16,7 +18,6 @@ export function Home() {
   }
 
   const [listCar, setListCart] = useState<CarProps[]>([]);
-  const [Ids, setIds] = useState<string[]>([]);
 
   useEffect(() => {
     function loadCars() {
@@ -43,10 +44,6 @@ export function Home() {
     loadCars();
   });
 
-  function handleLoadImage(id: string) {
-    setIds((Ids) => [...Ids, id]);
-  }
-
   return (
     <Container>
       <section className="w-full flex max-w-2xl m-auto my-5">
@@ -65,32 +62,7 @@ export function Home() {
 
       <main className="grid gap-6 grid-cols-1 lg:grid-cols-4 md:grid-cols-2 w-full px-2">
         {listCar.map((car: any) => (
-          <section
-            key={car.id}
-            className="bg-white rounded-lg mb-4 max-w-80 w-full mx-auto cursor-pointer hover:scale-105 transition-all"
-          >
-            <div
-              className="w-full rounded-lg h-60 bg-slate-300"
-              style={{ display: Ids.includes(car.id) ? "none" : "block" }}
-            ></div>
-            <img
-              className="w-full rounded-lg max-h-72 "
-              src={car.images[0].url}
-              alt={car.carName}
-              onLoad={() => handleLoadImage(car.id)}
-            />
-            <div className="p-3">
-              <h1 className="font-bold">{car.carName}</h1>
-              <p className="text-zinc-400">
-                {car.year} | {car.km} km
-              </p>
-              <div className="mt-4">
-                <strong className="text-xl">R$ {car.price}</strong>
-                <div className="h-px bg-slate-300 my-2 w-full"></div>
-                <p className="text-xs text-zinc-400">{car.city}</p>
-              </div>
-            </div>
-          </section>
+          <CardCar car={car} />
         ))}
       </main>
     </Container>
