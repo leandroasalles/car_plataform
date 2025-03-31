@@ -45,7 +45,6 @@ export function Home() {
 
   function handleLoadImage(id: string) {
     setIds((Ids) => [...Ids, id]);
-    console.log(Ids);
   }
 
   return (
