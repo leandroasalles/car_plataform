@@ -8,6 +8,7 @@ interface Car {
   km: number;
   price: number;
   city: string;
+  onclick: () => void;
 }
 
 export function CardCar({ car }: { car: Car }) {
@@ -19,6 +20,7 @@ export function CardCar({ car }: { car: Car }) {
 
   return (
     <section
+      onClick={car.onclick}
       key={car.id}
       className="bg-white rounded-lg mb-4 max-w-80 w-full mx-auto cursor-pointer hover:scale-105 transition-all"
     >

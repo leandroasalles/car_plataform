@@ -17,6 +17,8 @@ type authContextData = {
   user?: userProps | null;
   loading: boolean;
   setLoading: (loading: boolean) => void;
+  openModal: boolean;
+  setOpenModal: (modal: boolean) => void;
 };
 
 export const authContext = createContext({} as authContextData);
@@ -24,6 +26,7 @@ export const authContext = createContext({} as authContextData);
 function AuthProvider({ children }: ContextProviderProps) {
   const [user, setUser] = useState<userProps | null>(null);
   const [loading, setLoading] = useState(true);
+  const [openModal, setOpenModal] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -43,7 +46,16 @@ function AuthProvider({ children }: ContextProviderProps) {
   }, []);
 
   return (
-    <authContext.Provider value={{ signed: !!user, user, loading, setLoading }}>
+    <authContext.Provider
+      value={{
+        signed: !!user,
+        user,
+        loading,
+        setLoading,
+        openModal,
+        setOpenModal,
+      }}
+    >
       {children}
     </authContext.Provider>
   );

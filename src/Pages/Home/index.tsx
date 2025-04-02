@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import { collection, query, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebaseConnection";
 
+import { authContext } from "../../context";
+
 import { Container } from "../../Components/Container";
 import { CardCar } from "../../Components/CarCard";
+import { ModalDetails } from "../../Components/ModalDetails";
 
 export function Home() {
   interface CarProps {
@@ -15,9 +18,13 @@ export function Home() {
     km: number;
     price: number;
     id: string;
+    model: string;
+    description: string;
   }
 
+  const { openModal, setOpenModal } = useContext(authContext);
   const [listCar, setListCart] = useState<CarProps[]>([]);
+  const [carClicked, setCarClicked] = useState<CarProps>();
 
   useEffect(() => {
     function loadCars() {
@@ -34,6 +41,8 @@ export function Home() {
             images: doc.data().images,
             km: doc.data().km,
             price: doc.data().price,
+            model: doc.data().model,
+            description: doc.data().description,
             id: doc.id,
           });
         });
@@ -44,8 +53,24 @@ export function Home() {
     loadCars();
   });
 
+  function handleCarClick(car: CarProps) {
+    setCarClicked(car);
+    setOpenModal(true);
+  }
+
   return (
     <Container>
+      {openModal && (
+        <ModalDetails
+          images={carClicked?.images}
+          carName={carClicked?.carName}
+          year={carClicked?.year}
+          price={carClicked?.price}
+          city={carClicked?.city}
+          model={carClicked?.model}
+          description={carClicked?.description}
+        />
+      )}
       <section className="w-full flex max-w-2xl m-auto my-5">
         <input
           className="h-9 p-2 bg-white rounded-lg outline-none w-full"
@@ -61,8 +86,11 @@ export function Home() {
       </h1>
 
       <main className="grid gap-6 grid-cols-1 lg:grid-cols-4 md:grid-cols-2 w-full px-2">
-        {listCar.map((car: any) => (
-          <CardCar car={car} />
+        {listCar.map((car: CarProps) => (
+          <CardCar
+            key={car.id}
+            car={{ ...car, onclick: () => handleCarClick(car) }}
+          />
         ))}
       </main>
     </Container>
