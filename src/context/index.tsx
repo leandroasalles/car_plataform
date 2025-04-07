@@ -17,8 +17,10 @@ type authContextData = {
   user?: userProps | null;
   loading: boolean;
   setLoading: (loading: boolean) => void;
-  openModal: boolean;
-  setOpenModal: (modal: boolean) => void;
+  openDetailModal: boolean;
+  setOpenDetailModal: (modal: boolean) => void;
+  openEditModal: boolean;
+  setOpenEditModal: (modal: boolean) => void;
 };
 
 export const authContext = createContext({} as authContextData);
@@ -26,7 +28,8 @@ export const authContext = createContext({} as authContextData);
 function AuthProvider({ children }: ContextProviderProps) {
   const [user, setUser] = useState<userProps | null>(null);
   const [loading, setLoading] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
+  const [openDetailModal, setOpenDetailModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -52,8 +55,10 @@ function AuthProvider({ children }: ContextProviderProps) {
         user,
         loading,
         setLoading,
-        openModal,
-        setOpenModal,
+        openDetailModal,
+        setOpenDetailModal,
+        openEditModal,
+        setOpenEditModal,
       }}
     >
       {children}

@@ -22,7 +22,7 @@ export function Home() {
     description: string;
   }
 
-  const { openModal, setOpenModal } = useContext(authContext);
+  const { openDetailModal, setOpenDetailModal } = useContext(authContext);
   const [listCar, setListCart] = useState<CarProps[]>([]);
   const [carClicked, setCarClicked] = useState<CarProps>();
 
@@ -55,12 +55,12 @@ export function Home() {
 
   function handleCarClick(car: CarProps) {
     setCarClicked(car);
-    setOpenModal(true);
+    setOpenDetailModal(true);
   }
 
   return (
     <Container>
-      {openModal && (
+      {openDetailModal && (
         <ModalDetails
           images={carClicked?.images}
           carName={carClicked?.carName}
