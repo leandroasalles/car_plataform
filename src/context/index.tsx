@@ -26,7 +26,7 @@ export const authContext = createContext({} as authContextData);
 function AuthProvider({ children }: ContextProviderProps) {
   const [user, setUser] = useState<userProps | null>(null);
   const [loading, setLoading] = useState(true);
-  const [openModal, setOpenModal] = useState(true);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     setLoading(true);

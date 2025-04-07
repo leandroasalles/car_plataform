@@ -6,6 +6,11 @@ import AuthProvider from "./context";
 
 import { RouterProvider } from "react-router-dom";
 
+import { register } from "swiper/element/bundle";
+
+register();
+import "swiper/swiper-bundle.css";
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>

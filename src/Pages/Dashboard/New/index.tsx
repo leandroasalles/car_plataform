@@ -169,7 +169,7 @@ export function NewCar() {
             <button className="absolute" onClick={() => handleDelete(image)}>
               <FiTrash color="#FFF" size={20} />
             </button>
-            <img src={image.url} className="w-48 h-32" />
+            <img src={image.url} className="w-48 h-32 object-cover" />
           </div>
         ))}
       </div>
