@@ -77,6 +77,7 @@ export function Dashboard() {
             city={carClicked?.city}
             model={carClicked?.model}
             description={carClicked?.description}
+            id={carClicked?.id}
           />
         )}
         {listCar.map((car: any) => (

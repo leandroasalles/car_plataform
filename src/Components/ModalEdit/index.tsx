@@ -1,5 +1,10 @@
 import { useContext, useState } from "react";
 import { authContext } from "../../context";
+import { db } from "../../services/firebaseConnection";
+
+import { doc, deleteDoc } from "firebase/firestore";
+import { storage } from "../../services/firebaseConnection";
+import { ref, deleteObject } from "firebase/storage";
 
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -12,14 +17,21 @@ import { TextArea } from "../Textarea";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+interface ImageProps {
+  name: string;
+  uid: string;
+  url: string;
+}
+
 interface CarProps {
-  images: { url: string }[];
-  carName: string;
-  year: number;
-  price: number;
-  city: string;
-  model: string;
-  description: string;
+  images?: ImageProps[];
+  carName?: string;
+  year?: number;
+  price?: number;
+  city?: string;
+  model?: string;
+  description?: string;
+  id?: string;
 }
 
 const schema = yup.object().shape({
@@ -47,8 +59,9 @@ export function ModalEdit({
   city,
   model,
   description,
+  id,
 }: CarProps) {
-  const { setOpenEditModal } = useContext(authContext);
+  const { user, setOpenEditModal } = useContext(authContext);
   const [slidesPerView, setSlidesPerView] = useState<number>(2);
 
   const {
@@ -67,10 +80,34 @@ export function ModalEdit({
 
   function onsubmit(data: FormData) {
     console.log(data);
+    console.log(id);
   }
 
   function handlerDelete() {
-    console.log("deletou");
+    if (id) {
+      const docRef = doc(db, "cars", id);
+      deleteDoc(docRef)
+        .then(() => {
+          console.log("objeto deletado");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      const currentUser = user?.uid;
+      images?.forEach((image) => {
+        const imageRef = ref(storage, `images/${currentUser}/${image.name}`);
+        deleteObject(imageRef)
+          .then(() => {
+            console.log("Imagem excluída com sucesso!");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
+    }
+    closeModal();
+    window.location.reload();
   }
 
   return (
@@ -99,78 +136,80 @@ export function ModalEdit({
               ))}
           </Swiper>
         </div>
-        <form onSubmit={handleSubmit(onsubmit)}>
-          <div className="flex flex-col p-4">
-            <div className="flex justify-between">
-              <Input
-                type="text"
-                name="carName"
-                register={register}
-                error={errors.carName?.message}
-                defaultValue={carName}
-              />
-              <Input
-                type="text"
-                name="price"
-                register={register}
-                error={errors.price?.message}
-                defaultValue={price}
-              />
-            </div>
-            <Input
-              type="text"
-              name="model"
-              register={register}
-              error={errors.model?.message}
-              defaultValue={model}
-            />
-            <div className="flex gap-7">
-              <div className="mb-5">
-                <p className="font-bold">Cidade</p>
+        <div className="py-2 px-4">
+          <form onSubmit={handleSubmit(onsubmit)}>
+            <div className="flex flex-col ">
+              <div className="flex justify-between">
                 <Input
                   type="text"
-                  name="city"
+                  name="carName"
                   register={register}
-                  error={errors.city?.message}
-                  defaultValue={city}
+                  error={errors.carName?.message}
+                  defaultValue={carName}
                 />
-              </div>
-              <div>
-                <p className="font-bold">Ano</p>
                 <Input
                   type="text"
-                  name="year"
+                  name="price"
                   register={register}
-                  error={errors.year?.message}
-                  defaultValue={year}
+                  error={errors.price?.message}
+                  defaultValue={price}
                 />
               </div>
-            </div>
-            <div className="mb-2">
-              <p className="font-bold">Descrição</p>
-              <TextArea
-                name="description"
+              <Input
+                type="text"
+                name="model"
                 register={register}
-                error={errors.description?.message}
-                defaultValue={description}
+                error={errors.model?.message}
+                defaultValue={model}
               />
+              <div className="flex gap-7">
+                <div>
+                  <p className="font-bold">Cidade</p>
+                  <Input
+                    type="text"
+                    name="city"
+                    register={register}
+                    error={errors.city?.message}
+                    defaultValue={city}
+                  />
+                </div>
+                <div>
+                  <p className="font-bold">Ano</p>
+                  <Input
+                    type="text"
+                    name="year"
+                    register={register}
+                    error={errors.year?.message}
+                    defaultValue={year}
+                  />
+                </div>
+              </div>
+              <div className="mb-2">
+                <p className="font-bold">Descrição</p>
+                <TextArea
+                  name="description"
+                  register={register}
+                  error={errors.description?.message}
+                  defaultValue={description}
+                />
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="submit"
+                  className="bg-green-600 hover:bg-green-700 duration-100 grow rounded-lg h-9 text-white"
+                >
+                  Atualizar informações
+                </button>
+              </div>
             </div>
-            <div className="flex gap-2">
-              <button
-                type="submit"
-                className="bg-green-600 hover:bg-green-700 duration-100 grow rounded-lg h-9 text-white"
-              >
-                Atualizar informações
-              </button>
-              <button
-                onClick={handlerDelete}
-                className="grow-0 rounded-lg h-9 bg-red-600 hover:bg-red-700 duration-100 text-white px-6"
-              >
-                Excluir
-              </button>
-            </div>
-          </div>
-        </form>
+          </form>
+          <button
+            onClick={() => handlerDelete()}
+            className="grow-0 rounded-lg h-9 bg-red-600 hover:bg-red-700 duration-100 text-white px-6 mt-1 w-full"
+          >
+            Excluir
+          </button>
+        </div>
       </div>
     </div>
   );
