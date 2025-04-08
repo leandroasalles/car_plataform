@@ -32,7 +32,7 @@ export function Header() {
               </Link>
             </div>
             <span
-              className="bg-red-600 text-white px-2 rounded-lg cursor-pointer"
+              className="bg-red-600 hover:bg-red-700 duration-100 text-white px-5 rounded-lg cursor-pointer"
               onClick={logOut}
             >
               Sair

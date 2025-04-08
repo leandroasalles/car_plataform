@@ -10,7 +10,7 @@ interface CarProps {
   images?: { url: string }[];
   carName?: string;
   year?: number;
-  price?: number;
+  price?: string;
   city?: string;
   model?: string;
   description?: string;
@@ -40,7 +40,7 @@ export function ModalDetails({
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-slate-700/60 flex justify-center items-center">
+    <div className="fixed top-0 left-0 w-full h-full bg-slate-700/60 flex justify-center items-center z-10">
       <div className="bg-slate-50 z-100 max-w-xl break-words rounded-lg relative">
         <FiX
           size={25}
@@ -87,7 +87,7 @@ export function ModalDetails({
           </div>
           <button
             onClick={() => handleClick()}
-            className="bg-green-600 w-full rounded-lg h-9"
+            className="bg-green-600 w-full rounded-lg h-9 text-white hover:bg-green-800 duration-100 "
           >
             Enviar Whatsapp
           </button>
