@@ -273,7 +273,7 @@ export function NewCar() {
             )}
           </div>
           <button
-            className="bg-black text-white py-2 rounded-lg mt-4"
+            className="bg-slate-950 hover:bg-slate-900 text-white py-2 rounded-lg mt-4"
             type="submit"
           >
             Cadastrar
