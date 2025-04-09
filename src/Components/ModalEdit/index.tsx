@@ -82,10 +82,10 @@ export function ModalEdit({
     console.log(id);
   }
 
-  function handlerDelete() {
+  async function handlerDelete() {
     if (id) {
       const docRef = doc(db, "cars", id);
-      deleteDoc(docRef)
+      await deleteDoc(docRef)
         .then(() => {
           console.log("objeto deletado");
         })
@@ -106,7 +106,7 @@ export function ModalEdit({
       });
     }
     closeModal();
-    window.location.reload();
+    // window.location.reload();
   }
 
   return (
@@ -141,14 +141,14 @@ export function ModalEdit({
               <div className="flex justify-between">
                 <Input
                   type="text"
-                  name="carName"
+                  id="carName"
                   register={register}
                   error={errors.carName?.message}
                   defaultValue={carName}
                 />
                 <Input
                   type="text"
-                  name="price"
+                  id="price"
                   register={register}
                   error={errors.price?.message}
                   defaultValue={price}
@@ -156,7 +156,7 @@ export function ModalEdit({
               </div>
               <Input
                 type="text"
-                name="model"
+                id="model"
                 register={register}
                 error={errors.model?.message}
                 defaultValue={model}
@@ -166,7 +166,7 @@ export function ModalEdit({
                   <p className="font-bold">Cidade</p>
                   <Input
                     type="text"
-                    name="city"
+                    id="city"
                     register={register}
                     error={errors.city?.message}
                     defaultValue={city}
@@ -176,7 +176,7 @@ export function ModalEdit({
                   <p className="font-bold">Ano</p>
                   <Input
                     type="text"
-                    name="year"
+                    id="year"
                     register={register}
                     error={errors.year?.message}
                     defaultValue={year}
@@ -186,7 +186,7 @@ export function ModalEdit({
               <div className="mb-2">
                 <p className="font-bold">Descrição</p>
                 <TextArea
-                  name="description"
+                  id="description"
                   register={register}
                   error={errors.description?.message}
                   defaultValue={description}

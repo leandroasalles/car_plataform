@@ -13,6 +13,7 @@ import { Container } from "../../../Components/Container";
 import { DashboardHeader } from "../../../Components/DashboardHeader";
 import { Input } from "../../../Components/Inputs";
 import { Loading } from "../../../Components/Loading";
+import { TextArea } from "../../../Components/Textarea";
 
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -182,7 +183,7 @@ export function NewCar() {
             </label>
             <Input
               type="text"
-              name="carName"
+              id="carName"
               register={register}
               error={errors.carName?.message}
             />
@@ -193,7 +194,7 @@ export function NewCar() {
             </label>
             <Input
               type="text"
-              name="model"
+              id="model"
               register={register}
               error={errors.model?.message}
             />
@@ -205,7 +206,7 @@ export function NewCar() {
               </label>
               <Input
                 type="text"
-                name="year"
+                id="year"
                 register={register}
                 error={errors.year?.message}
               />
@@ -216,7 +217,7 @@ export function NewCar() {
               </label>
               <Input
                 type="text"
-                name="km"
+                id="km"
                 register={register}
                 error={errors.km?.message}
               />
@@ -229,7 +230,7 @@ export function NewCar() {
             </label>
             <Input
               type="text"
-              name="price"
+              id="price"
               register={register}
               error={errors.price?.message}
             />
@@ -240,7 +241,7 @@ export function NewCar() {
             </label>
             <Input
               type="text"
-              name="city"
+              id="city"
               register={register}
               error={errors.city?.message}
             />
@@ -251,7 +252,7 @@ export function NewCar() {
             </label>
             <Input
               type="text"
-              name="whatsapp"
+              id="whatsapp"
               register={register}
               error={errors.whatsapp?.message}
             />
@@ -260,17 +261,22 @@ export function NewCar() {
             <label htmlFor="city" className="font-semibold">
               Descrição
             </label>
-            <input
+            <TextArea
+              id="description"
+              register={register}
+              error={errors.description?.message}
+            />
+            {/* <input
               type="text"
               id="description"
               className="rounded-lg w-full p-2 outline-none border-2 border-slate-200 h-20"
               {...register("description")}
-            />
-            {errors.description && (
+            /> */}
+            {/* {errors.description && (
               <p className="w-full text-red-600	text-xs	">
                 {errors.description?.message}
               </p>
-            )}
+            )} */}
           </div>
           <button
             className="bg-slate-950 hover:bg-slate-900 text-white py-2 rounded-lg mt-4"

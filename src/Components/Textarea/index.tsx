@@ -2,7 +2,7 @@ import { UseFormRegister, RegisterOptions } from "react-hook-form";
 
 interface InputProps {
   placeholder?: string;
-  name: string;
+  id: string;
   register: UseFormRegister<any>;
   error?: string;
   rules?: RegisterOptions;
@@ -11,7 +11,7 @@ interface InputProps {
 
 export function TextArea({
   placeholder,
-  name,
+  id,
   register,
   rules,
   error,
@@ -20,23 +20,13 @@ export function TextArea({
   return (
     <div>
       <textarea
-        className="p-1 w-full h-24 resize-none"
+        className="p-2 w-full h-24 resize-none outline-none border-2 border-slate-200"
         placeholder={placeholder}
-        id={name}
-        {...register(name, rules)}
+        id={id}
+        {...register(id, rules)}
         defaultValue={defaultValue}
-        // onChange={(e) => register(name, rules).onChange(e)}
       ></textarea>
       {error && <p className="w-full text-red-600 text-xs">{error}</p>}
-      {/* <input
-        className="rounded-lg h-8 w-full p-2 outline-none border-2 border-slate-200 mb-2"
-        placeholder={placeholder}
-        id={name}
-        {...register(name, rules)}
-        defaultValue={defaultValue}
-        onChange={(e) => register(name, rules).onChange(e)}
-      />
-      {error && <p className="w-full text-red-600 text-xs">{error}</p>} */}
     </div>
   );
 }
