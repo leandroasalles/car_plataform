@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { authContext } from "../../context";
 import { db } from "../../services/firebaseConnection";
 
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { storage } from "../../services/firebaseConnection";
 import { ref, deleteObject } from "firebase/storage";
 
@@ -38,10 +38,15 @@ const schema = yup.object().shape({
   carName: yup.string().required("Nome do carro é obrigatório!"),
   model: yup.string().required("Modelo do carro é obrigatório!"),
   year: yup
-    .string()
+    .number()
+    .typeError("Digite um número válido!")
+    .integer("teste")
     .required("O ano é obrigatório!")
     .min(4, "O ano deve ter 4 caracteres"),
-  price: yup.string().required("Valor é obrigatório!"),
+  price: yup
+    .number()
+    .typeError("Digite um número válido!")
+    .required("Valor é obrigatório!"),
   city: yup.string().required("Cidade é obrigatória!"),
   description: yup
     .string()
@@ -77,9 +82,22 @@ export function ModalEdit({
     setOpenEditModal(false);
   }
 
-  function onsubmit(data: FormData) {
+  async function onsubmit(data: FormData) {
     console.log(data);
-    console.log(id);
+    if (id) {
+      const docRef = doc(db, "cars", id);
+      await updateDoc(docRef, {
+        carName: data.carName,
+        model: data.model,
+        year: data.year,
+        price: data.price,
+        city: data.city,
+        description: data.description,
+      }).then(() => {
+        closeModal();
+        window.location.reload();
+      });
+    }
   }
 
   async function handlerDelete() {
@@ -106,12 +124,12 @@ export function ModalEdit({
       });
     }
     closeModal();
-    // window.location.reload();
+    window.location.reload();
   }
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-slate-700/60 flex justify-center items-center z-10">
-      <div className="bg-slate-50 z-100 max-w-xl break-words rounded-lg relative">
+      <div className="bg-slate-50 z-100 w-full max-w-xl break-words rounded-lg relative">
         <FiX
           size={25}
           className="absolute m-1 right-0 cursor-pointer hover:text-red-500 z-10"

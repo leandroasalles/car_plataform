@@ -10,7 +10,7 @@ interface CarProps {
   images?: { url: string }[];
   carName?: string;
   year?: number;
-  price?: string;
+  price?: number;
   city?: string;
   model?: string;
   description?: string;
