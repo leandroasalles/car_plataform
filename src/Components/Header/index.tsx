@@ -21,11 +21,15 @@ export function Header() {
     <div className="w-full shadow bg-white px-5">
       <header className="flex items-center justify-between w-full m-auto h-14">
         <Link to="/">
-          <img src={Logo} alt="Imagem de Logo" />
+          <img
+            className="max-w-24 md:max-w-none"
+            src={Logo}
+            alt="Imagem de Logo"
+          />
         </Link>
 
         {!isLoading && signed && (
-          <div className="flex gap-4">
+          <div className="flex gap-1 md:gap-4">
             <div className="border-black border-2	rounded-full">
               <Link to="/dashboard">
                 <FiUser size={22} />

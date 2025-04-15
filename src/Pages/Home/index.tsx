@@ -73,15 +73,15 @@ export function Home() {
       )}
       <section className="w-full flex max-w-2xl m-auto my-5">
         <input
-          className="h-9 p-2 bg-white rounded-lg outline-none w-full"
+          className="h-7 md:h-9 p-2 bg-white rounded-lg outline-none w-full mx-2 text-sm md:text-base"
           type="text"
           placeholder="Digite o nome do carro..."
         />
-        <button className="bg-red-500 h-9 px-3 rounded-lg text-white mx-2">
+        <button className="bg-red-500 h-7 md:h-9 px-3 rounded-lg text-white mx-2">
           Buscar
         </button>
       </section>
-      <h1 className="text-center mb-5 font-bold text-xl">
+      <h1 className="text-center mb-5 font-bold text-lg md:text-xl">
         Carros novos e usados em todo Brasil
       </h1>
 
