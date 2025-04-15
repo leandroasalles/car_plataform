@@ -20,7 +20,7 @@ export function TextArea({
   return (
     <div>
       <textarea
-        className="p-2 w-full h-24 resize-none outline-none border-2 border-slate-200"
+        className="p-2 w-full h-20 md:h-24 resize-none outline-none border-2 border-slate-200 rounded-lg"
         placeholder={placeholder}
         id={id}
         {...register(id, rules)}

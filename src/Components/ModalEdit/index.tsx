@@ -227,7 +227,7 @@ export function ModalEdit({
               <div className="flex gap-2">
                 <button
                   type="submit"
-                  className="bg-green-600 hover:bg-green-700 duration-100 grow rounded-lg h-9 text-white"
+                  className="bg-green-600 hover:bg-green-700 duration-100 grow rounded-lg h-6 md:h-9 text-white text-sm md:text-base"
                 >
                   Atualizar informações
                 </button>
@@ -236,7 +236,7 @@ export function ModalEdit({
           </form>
           <button
             onClick={() => handlerDelete()}
-            className="grow-0 rounded-lg h-9 bg-red-600 hover:bg-red-700 duration-100 text-white px-6 mt-1 w-full"
+            className="grow-0 rounded-lg h-6 md:h-9 bg-red-600 hover:bg-red-700 duration-100 text-white text-sm md:text-base px-6 mt-1 w-full "
           >
             Excluir
           </button>
