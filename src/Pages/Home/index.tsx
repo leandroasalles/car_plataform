@@ -9,19 +9,19 @@ import { Container } from "../../Components/Container";
 import { CardCar } from "../../Components/CarCard";
 import { ModalDetails } from "../../Components/ModalDetails";
 
-export function Home() {
-  interface CarProps {
-    carName: string;
-    year: number;
-    city: string;
-    images: [];
-    km: number;
-    price: number;
-    id: string;
-    model: string;
-    description: string;
-  }
+interface CarProps {
+  carName: string;
+  year: number;
+  city: string;
+  images: [];
+  km: number;
+  price: number;
+  id: string;
+  model: string;
+  description: string;
+}
 
+export function Home() {
   const { openDetailModal, setOpenDetailModal } = useContext(authContext);
   const [listCar, setListCart] = useState<CarProps[]>([]);
   const [carClicked, setCarClicked] = useState<CarProps>();

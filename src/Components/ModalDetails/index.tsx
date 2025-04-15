@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { authContext } from "../../context";
 
 import { FiX } from "react-icons/fi";
@@ -28,6 +28,20 @@ export function ModalDetails({
   const { setOpenDetailModal } = useContext(authContext);
   const [slidesPerView, setSlidesPerView] = useState<number>(2);
 
+  useEffect(() => {
+    function handleResize() {
+      const width = window.innerWidth;
+      if (width <= 640) {
+        setSlidesPerView(1);
+      } else {
+        setSlidesPerView(2);
+      }
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, []);
+
   function handleClick() {
     const message = `Olá, vi o anúncio do carro ${carName} e gostaria de mais informações!`;
     window.open(
@@ -41,7 +55,7 @@ export function ModalDetails({
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-slate-700/60 flex justify-center items-center z-10">
-      <div className="bg-slate-50 z-100 max-w-xl break-words rounded-lg relative">
+      <div className="bg-slate-50 z-100 w-full max-w-xl break-words rounded-lg relative">
         <FiX
           size={25}
           className="absolute m-1 right-0 cursor-pointer hover:text-red-500 z-10"
@@ -67,10 +81,10 @@ export function ModalDetails({
         </div>
         <div className="flex flex-col p-4">
           <div className="flex justify-between">
-            <span className="text-2xl font-bold">{carName}</span>
-            <span className="text-2xl font-bold">{price}</span>
+            <span className="text-lg md:text-2xl font-bold">{carName}</span>
+            <span className="text-lg md:text-2xl font-bold">{price}</span>
           </div>
-          <span className="mb-5">{model}</span>
+          <span className="text-xs mb-5">{model}</span>
           <div className="flex gap-7">
             <div className="mb-5">
               <p className="font-bold">Cidade</p>

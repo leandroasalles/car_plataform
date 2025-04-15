@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { authContext } from "../../context";
 import { db } from "../../services/firebaseConnection";
 
@@ -68,6 +68,20 @@ export function ModalEdit({
 }: CarProps) {
   const { user, setOpenEditModal } = useContext(authContext);
   const [slidesPerView, setSlidesPerView] = useState<number>(2);
+
+  useEffect(() => {
+    function handleResize() {
+      const width = window.innerWidth;
+      if (width <= 640) {
+        setSlidesPerView(1);
+      } else {
+        setSlidesPerView(2);
+      }
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, []);
 
   const {
     register,
