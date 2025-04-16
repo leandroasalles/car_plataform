@@ -66,7 +66,7 @@ src/ ├── Components/ │ ├── Container/ │ ├── DashboardHeade
 
 5. Acesse a aplicação no navegador
 
-   https://localhost:3000
+   http://localhost:5173
 
 ## Principais Funcionalidades
 
