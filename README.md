@@ -3,28 +3,19 @@
 ## Índice
 
 1. [Descrição do Projeto](#descrição-do-projeto)
-2. [Estrutura do Projeto](#estrutura-do-projeto)
-3. [Configuração e Instalação](#configuração-e-instalação)
-4. [Principais Funcionalidades](#principais-funcionalidades)
-5. [Componentes Principais](#componentes-principais)
-6. [Contexto de Autenticação](#contexto-de-autenticação)
-7. [Rotas](#rotas)
-8. [Dependências](#dependências)
-9. [Como Contribuir](#como-contribuir)
+2. [Configuração e Instalação](#configuração-e-instalação)
+3. [Principais Funcionalidades](#principais-funcionalidades)
+4. [Componentes Principais](#componentes-principais)
+5. [Contexto de Autenticação](#contexto-de-autenticação)
+6. [Rotas](#rotas)
+7. [Dependências](#dependências)
+8. [Como Contribuir](#como-contribuir)
 
 ---
 
 ## Descrição do Projeto
 
-A **Car Platform** é uma aplicação web para gerenciar anúncios de carros novos e usados. Os usuários podem visualizar carros, pesquisar por modelos específicos, e acessar detalhes de cada veículo. A aplicação utiliza Firebase para autenticação e armazenamento de dados.
-
----
-
-## Estrutura do Projeto
-
-A estrutura do projeto é organizada da seguinte forma:
-
-src/ ├── Components/ │ ├── Container/ │ ├── DashboardHeader/ │ ├── Inputs/ │ ├── Loading/ │ ├── ModalDetails/ │ ├── Private/ ├── Pages/ │ ├── Dashboard/ │ ├── Home/ │ ├── Login/ ├── context/ ├── services/ │ ├── firebaseConnection.ts ├── App.tsx ├── main.tsx ├── index.css
+A **Car Platform** é uma aplicação web para gerenciar anúncios de carros novos e usados. Os usuários podem visualizar carros, pesquisar por modelos específicos, e acessar detalhes de cada veículo. A aplicação utiliza Firebase para autenticação e armazenamento de dados. Os usuários logados tem permissão para adicionar, editar e excluir carros anunciados.
 
 ---
 
