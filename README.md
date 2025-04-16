@@ -1,129 +1,157 @@
-# Plataforma de Carros
+# Car Platform
 
-![Status](https://img.shields.io/badge/status-in%20development-yellow)
+## Índice
 
-## Visão Geral
+1. [Descrição do Projeto](#descrição-do-projeto)
+2. [Estrutura do Projeto](#estrutura-do-projeto)
+3. [Configuração e Instalação](#configuração-e-instalação)
+4. [Principais Funcionalidades](#principais-funcionalidades)
+5. [Componentes Principais](#componentes-principais)
+6. [Contexto de Autenticação](#contexto-de-autenticação)
+7. [Rotas](#rotas)
+8. [Dependências](#dependências)
+9. [Como Contribuir](#como-contribuir)
 
-Este projeto é uma plataforma de carros que permite aos usuários gerenciar e visualizar informações sobre vários carros. Inclui recursos como adicionar novos carros, visualizar detalhes dos carros e editar informações dos carros.
+---
 
-## Funcionalidades
+## Descrição do Projeto
 
-- Adicionar novos carros
-- Visualizar detalhes dos carros
-- Editar informações dos carros
-- Excluir carros
+A **Car Platform** é uma aplicação web para gerenciar anúncios de carros novos e usados. Os usuários podem visualizar carros, pesquisar por modelos específicos, e acessar detalhes de cada veículo. A aplicação utiliza Firebase para autenticação e armazenamento de dados.
 
-## Instalação
+---
 
-Para instalar e executar este projeto localmente, siga estas etapas:
+## Estrutura do Projeto
+
+A estrutura do projeto é organizada da seguinte forma:
+
+src/ ├── Components/ │ ├── Container/ │ ├── DashboardHeader/ │ ├── Inputs/ │ ├── Loading/ │ ├── ModalDetails/ │ ├── Private/ ├── Pages/ │ ├── Dashboard/ │ ├── Home/ │ ├── Login/ ├── context/ ├── services/ │ ├── firebaseConnection.ts ├── App.tsx ├── main.tsx ├── index.css
+
+---
+
+## Configuração e Instalação
+
+### Pré-requisitos
+
+- Node.js (versão 16 ou superior)
+- Gerenciador de pacotes `npm` ou `yarn`
+
+### Passos para Instalação
 
 1. Clone o repositório:
 
-```sh
-git clone https://github.com/leandroasalles/car_plataform.git
-```
+   ```bash
+   git clone https://github.com/seu-usuario/car-platform.git
+   cd car-platform
 
-2. Navegue até o diretório do projeto:
+   ```
 
-```sh
-cd car_plataform
-```
+2. Instale as dependências:
 
-3. Instale as dependências:
+   ```bash
+   npm install
 
-```sh
-npm install
-```
+   ```
 
-4. Inicie o servidor de desenvolvimento:
+3. Configure o Firebase:
 
-```sh
-npm run dev
-```
+- Crie um projeto no Firebase.
+- Adicione as credenciais no arquivo src/services/firebaseConnection.ts.
 
-## Uso
+4. Instale as dependências:
 
-Uma vez que o servidor esteja em execução, você pode acessar a aplicação no seu navegador em `http://localhost:5173`.
+   ```bash
+   npm run dev
 
-## Contribuição
+   ```
 
-Contribuições são bem-vindas! Por favor, siga estas etapas para contribuir:
+5. Acesse a aplicação no navegador
+
+   https://localhost:3000
+
+## Principais Funcionalidades
+
+- Autenticação:
+- Login e logout com Firebase Authentication.
+- Visualização de Carros: Lista de carros disponíveis com imagens, preços e detalhes.
+- Busca:
+  Campo de busca para filtrar carros por nome.
+- Detalhes do Carro: Modal com informações detalhadas do carro selecionado.
+- Gerenciamento de Anúncios: Adicionar, editar e excluir anúncios (disponível no painel do administrador).
+
+## Componentes principais
+
+1. `Container`:
+   Componente que encapsula o layout principal da aplicação.
+2. `DashboardHeader`:
+   Cabeçalho utilizado no painel administrativo.
+3. `Inputs`: Componente reutilizável para campos de entrada.
+4. `loading`: Componente de carregamento exibido durante operações assíncronas.
+5. `ModalDetails`: Exibe informações detalhadas de um carro em um modal.
+6. `Private`: Protege rotas que requerem autenticação.
+
+## Contexto de Autenticação
+
+O contexto de autenticação (`authContext`) gerencia o estado do usuário e fornece as seguintes propriedades:
+
+1. `signed`: Indica se o usuário está autenticado.
+2. `user`: Dados do usuário autenticado.
+3. `loading`: Indica se a autenticação está em andamento.
+4. `setLoading`: Função para atualizar o estado de carregamento
+
+## Rotas
+
+As rotas da aplicação são configuradas no arquivo `App.tsx`:
+
+#### Rotas públicas
+
+- `/`: Home.
+- `/login`: Página de login.
+- `/register`: Página de registro.
+
+#### Rotas Privadas
+
+- `/dashboard`: Painel administrativo (protegido pelo componente `Private`).
+
+## Dependências
+
+#### Principais dependências
+
+- React: Biblioteca para construção da interface.
+- React Router DOM: Gerenciamento de rotas.
+- Firebase: Backend para autenticação e banco de dados.
+- React Hook Form: Gerenciamento de formulários.
+- Yup: Validação de formulários.
+- Swiper: Biblioteca para carrosséis.
+
+## Como Contribuir
 
 1. Faça um fork do repositório.
-2. Crie um novo branch:
+2. Instale as dependências:
 
-```sh
-git checkout -b feature/sua-nova-funcionalidade
-```
+   ```bash
+   git checkout -b minha-feature
 
-3. Faça suas alterações e faça o commit:
+   ```
 
-```sh
-git commit -m "Adicione sua mensagem aqui"
-```
+3. Faça as alterações e commit:
 
-4. Envie para o branch:
+   ```bash
+   git commit -m "Adicionei uma nova feature"
 
-```sh
-git push origin feature/sua-nova-funcionalidade
-```
+   ```
 
-5. Abra um pull request.
+4. Envie para o repositório remoto:
 
-## Licença
+   ```bash
+   git push origin minha-feature
 
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+   ```
 
-<h1 align="center">👋 Olá, eu sou {Leandro Salles}</h1>
+5. Abra um Pull Request.
 
-###
+### Contato
 
-<div align="center">
-  <img src="https://img.shields.io/static/v1?message=LinkedIn&logo=linkedin&label=&color=0077B5&logoColor=white&labelColor=&style=for-the-badge" height="22" alt="linkedin logo"  />
-  <img src="https://img.shields.io/static/v1?message=Discord&logo=discord&label=&color=7289DA&logoColor=white&labelColor=&style=for-the-badge" height="22" alt="discord logo"  />
-  <img src="https://img.shields.io/static/v1?message=Instagram&logo=instagram&label=&color=E4405F&logoColor=white&labelColor=&style=for-the-badge" height="22" alt="instagram logo"  />
-</div>
+Se você tiver dúvidas ou sugestões, entre em contato:
 
-###
-
-<h2 align="left">💼 Perfil Profissional</h2>
-
-###
-
-<p align="left">💻 Estudante de Programação<br>🌱 Entendedor da visão de cliente<br>🎓 Cursando Análise e Desenvolvimento de Sistemas</p>
-
-###
-
-<h2 align="left">👨‍💻 Skills:</h2>
-
-###
-
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="40" alt="javascript logo"  />
-  <img width="20" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="40" alt="typescript logo"  />
-  <img width="20" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="40" alt="react logo"  />
-  <img width="20" />
-  <img src="https://cdn.simpleicons.org/tailwindcss/06B6D4" height="40" alt="tailwindcss logo"  />
-  <img width="20" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="40" alt="git logo"  />
-  <img width="20" />
-  <img src="https://skillicons.dev/icons?i=github" height="40" alt="github logo"  />
-  <img width="20" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" height="40" alt="vscode logo"  />
-</div>
-
-###
-
-<p align="left">Fique à vontade para entrar em contato comigo para discutir oportunidades de colaboração, projetos interessantes ou qualquer outro assunto relacionado ao desenvolvimento de software. Estou ansioso para ouvir de você! 😊</p>
-
-###
-
-<div align="center">
-  <a href="https://open.spotify.com/user/Leandro Salles">
-    <img src="https://spotify-recently-played-readme.vercel.app/api?user=Leandro%20Salles&count=1&unique=true" alt="Spotify recently played"  />
-  </a>
-</div>
-(https://spotify-recently-played-readme.vercel.app/api?user=12182490516)
-###
+- Email: leandro.asalles182@gmail.com
+- GitHub: `leandroasalles`
