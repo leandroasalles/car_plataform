@@ -64,7 +64,7 @@ export function Login() {
               <Input
                 type="email"
                 placeholder="Digite seu e-mail..."
-                name="email"
+                id="email"
                 error={errors.email?.message}
                 register={register}
               />
@@ -73,7 +73,7 @@ export function Login() {
               <Input
                 type="password"
                 placeholder="Digite sua senha..."
-                name="password"
+                id="password"
                 error={errors.password?.message}
                 register={register}
               />
@@ -86,7 +86,10 @@ export function Login() {
             </button>
           </form>
         </section>
-        <Link to="/register">Ainda não possui uma conta? Cadastre-se</Link>
+        <Link to="/register">
+          Ainda não possui uma conta?{" "}
+          <strong className="text-blue-500">Cadastre-se!</strong>
+        </Link>
       </main>
     </div>
   );

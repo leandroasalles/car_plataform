@@ -83,7 +83,7 @@ export function Register() {
               <Input
                 type="text"
                 placeholder="Digite seu nome completo..."
-                name="name"
+                id="name"
                 register={register}
                 error={errors.name?.message}
               />
@@ -92,7 +92,7 @@ export function Register() {
               <Input
                 type="email"
                 placeholder="Digite seu e-mail..."
-                name="email"
+                id="email"
                 register={register}
                 error={errors.email?.message}
               />
@@ -101,7 +101,7 @@ export function Register() {
               <Input
                 type="´password"
                 placeholder="Digite sua senha..."
-                name="password"
+                id="password"
                 register={register}
                 error={errors.password?.message}
               />
@@ -114,7 +114,10 @@ export function Register() {
             </button>
           </form>
         </section>
-        <Link to="/login">Ja possui uma conta? Acesse</Link>
+        <Link to="/login">
+          Ja possui uma conta?{" "}
+          <strong className="text-blue-500">Acesse!</strong>
+        </Link>
       </main>
     </div>
   );
