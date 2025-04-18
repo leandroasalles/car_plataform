@@ -16,6 +16,7 @@ import { TextArea } from "../Textarea";
 
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import toast from "react-hot-toast";
 
 interface ImageProps {
   name: string;
@@ -107,10 +108,15 @@ export function ModalEdit({
         price: data.price,
         city: data.city,
         description: data.description,
-      }).then(() => {
-        closeModal();
-        window.location.reload();
-      });
+      })
+        .then(() => {
+          toast.success("Carro atualizado com sucesso!");
+          closeModal();
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
@@ -119,7 +125,7 @@ export function ModalEdit({
       const docRef = doc(db, "cars", id);
       await deleteDoc(docRef)
         .then(() => {
-          console.log("objeto deletado");
+          toast.success("Carro deletado com sucesso!");
         })
         .catch((error) => {
           console.log(error);

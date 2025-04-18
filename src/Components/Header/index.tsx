@@ -3,13 +3,18 @@ import Logo from "../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebaseConnection";
 import { signOut } from "firebase/auth";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { authContext } from "../../context/index";
 
 export function Header() {
   const { signed } = useContext(authContext);
   const isLoading = false;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(signed);
+    return;
+  }, []);
 
   async function logOut() {
     await signOut(auth).then(() => {

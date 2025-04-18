@@ -24,6 +24,8 @@ import { authContext } from "../../../context";
 
 import { v4 as uuidV4 } from "uuid";
 
+import toast from "react-hot-toast";
+
 const schema = yup.object().shape({
   carName: yup.string().required("Nome do carro é obrigatório!"),
   model: yup.string().required("Modelo do carro é obrigatório!"),
@@ -83,6 +85,7 @@ export function NewCar() {
     await addDoc(carRef, newCar)
       .then(() => {
         setLoading(false);
+        toast.success("Carro cadastrado com sucesso!");
       })
       .catch((err) => {
         console.log(err);
@@ -121,6 +124,7 @@ export function NewCar() {
             url: url,
           };
           setImageUrls([...imageUrls, newImage]);
+          toast.success("Imagem adicionada com sucesso!");
         });
       })
       .catch((err) => {
@@ -135,6 +139,7 @@ export function NewCar() {
       .then(() => {
         setImageUrls(imageUrls.filter((img) => img.name !== image.name));
         setLoading(false);
+        toast.success("Imagem deletada com sucesso!");
       })
       .catch((err) => {
         console.log(err);

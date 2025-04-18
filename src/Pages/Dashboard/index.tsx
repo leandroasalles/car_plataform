@@ -81,7 +81,6 @@ export function Dashboard() {
           />
         )}
         {listCar.map((car: any) => (
-          // <CardCar car={car} />
           <section
             key={car.id}
             className="bg-white rounded-lg mb-4 max-w-80 w-full mx-auto cursor-pointer hover:scale-105 transition-all"

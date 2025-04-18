@@ -1,10 +1,14 @@
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+
 import { auth } from "../../services/firebaseConnection";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+
 import Logo from "../../assets/logo.svg";
 import { Input } from "../../Components/Inputs";
 
@@ -29,10 +33,13 @@ export function Login() {
   const onSubmit = async (data: any) => {
     await signInWithEmailAndPassword(auth, data.email, data.password)
       .then(() => {
+        toast.success("Login realizado com sucesso!");
         navigate("/dashboard", { replace: true });
       })
       .catch((err) => {
-        console.log(err);
+        if (err.code === "auth/invalid-credential") {
+          toast.error("Usuário ou senha inválida!");
+        }
       });
   };
 
