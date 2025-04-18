@@ -3,7 +3,7 @@ import Logo from "../../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../../services/firebaseConnection";
 import { signOut } from "firebase/auth";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { authContext } from "../../context/index";
 
 export function Header() {

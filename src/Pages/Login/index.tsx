@@ -11,6 +11,7 @@ import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
 import Logo from "../../assets/logo.svg";
 import { Input } from "../../Components/Inputs";
+import Car from "../../assets/car.jpg";
 
 export function Login() {
   const validation = yup.object().shape({
@@ -53,8 +54,8 @@ export function Login() {
     [];
 
   return (
-    <div>
-      <main className="flex flex-col justify-center items-center w-full min-h-screen gap-4">
+    <div className="flex">
+      <main className="flex flex-col justify-center items-center w-full min-h-screen gap-4 p-3">
         <Link to="/">
           <img
             className="max-w-52 sm:w-96 sm:max-w-96"
@@ -62,7 +63,7 @@ export function Login() {
             alt="Imagem de logo"
           />
         </Link>
-        <section className="  w-full flex items-center justify-center">
+        <section className="w-full flex items-center justify-center">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="w-full max-w-2xl flex flex-col p-5 rounded-lg items-center justify-center gap-3 bg-white"
@@ -98,6 +99,13 @@ export function Login() {
           <strong className="text-blue-500">Cadastre-se!</strong>
         </Link>
       </main>
+      <div className="hidden md:block bg-black h-screen w-full">
+        <img
+          className="h-full max-h-screen w-full object-cover"
+          src={Car}
+          alt=""
+        />
+      </div>
     </div>
   );
 }

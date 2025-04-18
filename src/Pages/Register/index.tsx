@@ -9,8 +9,10 @@ import {
   updateProfile,
   onAuthStateChanged,
 } from "firebase/auth";
+
 import Logo from "../../assets/logo.svg";
 import { Input } from "../../Components/Inputs";
+import Car from "../../assets/car.jpg";
 
 const validation = yup.object().shape({
   email: yup
@@ -65,8 +67,8 @@ export function Register() {
     [];
 
   return (
-    <div>
-      <main className="flex flex-col justify-center items-center w-full min-h-screen gap-4">
+    <div className="flex">
+      <main className="flex flex-col justify-center items-center w-full min-h-screen gap-4 p-3">
         <Link to="/">
           <img
             className="max-w-52 sm:w-96 sm:max-w-96"
@@ -119,6 +121,13 @@ export function Register() {
           <strong className="text-blue-500">Acesse!</strong>
         </Link>
       </main>
+      <div className="hidden md:block bg-black h-screen w-full">
+        <img
+          className="h-full max-h-screen w-full object-cover"
+          src={Car}
+          alt=""
+        />
+      </div>
     </div>
   );
 }
