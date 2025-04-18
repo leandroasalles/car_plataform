@@ -21,6 +21,7 @@ type authContextData = {
   setOpenDetailModal: (modal: boolean) => void;
   openEditModal: boolean;
   setOpenEditModal: (modal: boolean) => void;
+  setUser: (user: userProps | null) => void;
 };
 
 export const authContext = createContext({} as authContextData);
@@ -53,6 +54,7 @@ function AuthProvider({ children }: ContextProviderProps) {
       value={{
         signed: !!user,
         user,
+        setUser,
         loading,
         setLoading,
         openDetailModal,

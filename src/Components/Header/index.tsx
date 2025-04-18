@@ -7,17 +7,13 @@ import { useContext, useEffect } from "react";
 import { authContext } from "../../context/index";
 
 export function Header() {
-  const { signed } = useContext(authContext);
+  const { signed, setUser } = useContext(authContext);
   const isLoading = false;
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(signed);
-    return;
-  }, []);
-
   async function logOut() {
     await signOut(auth).then(() => {
+      setUser(null);
       navigate("/login");
     });
   }
