@@ -134,16 +134,13 @@ export function NewCar() {
 
   async function handleDelete(image: ImageProps) {
     const imageRef = ref(storage, `images/${image.uid}/${image.name}`);
-    setLoading(true);
     await deleteObject(imageRef)
       .then(() => {
         setImageUrls(imageUrls.filter((img) => img.name !== image.name));
-        setLoading(false);
         toast.success("Imagem deletada com sucesso!");
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false);
       });
   }
 
